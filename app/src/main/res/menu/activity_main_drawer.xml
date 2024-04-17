@@ -24,5 +24,9 @@
             android:id="@+id/nav_browser"
             android:icon="@android:drawable/ic_menu_mapmode"
             android:title="Browser" />
+        <item
+            android:id="@+id/nav_worker"
+            android:icon="@android:drawable/ic_lock_idle_low_battery"
+            android:title="Worker" />
     </group>
 </menu>
