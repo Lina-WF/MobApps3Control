@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CameraFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/textViewCTA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Запечатли момент сечас!"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/imageViewMoment"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="25dp" />
+
+        <EditText
+            android:id="@+id/editTextMoment"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:hint="Подпишите момент"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/buttonMoment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Готово" />
+
+        <TextView
+            android:id="@+id/textViewMoment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Тут будет подпись"
+            android:textSize="25sp"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+</FrameLayout>

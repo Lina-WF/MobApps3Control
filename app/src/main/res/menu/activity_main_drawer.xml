@@ -28,5 +28,17 @@
             android:id="@+id/nav_worker"
             android:icon="@android:drawable/ic_lock_idle_low_battery"
             android:title="Worker" />
+        <item
+            android:id="@+id/nav_sensor"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="Sensor" />
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Camera" />
+        <item
+            android:id="@+id/nav_microphone"
+            android:icon="@android:drawable/ic_btn_speak_now"
+            android:title="Microphone" />
     </group>
 </menu>

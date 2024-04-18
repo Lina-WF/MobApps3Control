@@ -36,5 +36,20 @@
         android:name="ru.mirea.ushakovaps.mireaproject.WorkerFragment"
         android:label="fragment_worker"
         tools:layout="@layout/fragment_worker" />
+    <fragment
+        android:id="@+id/nav_sensor"
+        android:name="ru.mirea.ushakovaps.mireaproject.SensorFragment"
+        android:label="fragment_sensor"
+        tools:layout="@layout/fragment_sensor" />
+    <fragment
+        android:id="@+id/nav_camera"
+        android:name="ru.mirea.ushakovaps.mireaproject.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
+    <fragment
+        android:id="@+id/nav_microphone"
+        android:name="ru.mirea.ushakovaps.mireaproject.MicrophoneFragment"
+        android:label="fragment_microphone"
+        tools:layout="@layout/fragment_microphone" />
 
 </navigation>
