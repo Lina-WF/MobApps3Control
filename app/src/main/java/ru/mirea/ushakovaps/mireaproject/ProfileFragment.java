@@ -1,6 +1,7 @@
 package ru.mirea.ushakovaps.mireaproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -11,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,13 +54,14 @@ public class ProfileFragment extends Fragment {
         return fragment;
     }
 
-    EditText editTextNickname;
-    EditText editTextAge;
-    EditText editTextCountry;
-    SharedPreferences sharedPreferences;
-    String nickname;
-    int age;
-    String country;
+    private EditText editTextNickname;
+    private EditText editTextAge;
+    private EditText editTextCountry;
+    private SharedPreferences sharedPreferences;
+    private String nickname;
+    private int age;
+    private String country;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,6 +112,18 @@ public class ProfileFragment extends Fragment {
                 editor.putString("Country", country);
 
                 editor.apply();
+            }
+        });
+
+        mAuth = FirebaseAuth.getInstance();
+
+        Button buttonSignOut = view.findViewById(R.id.buttonSignOut);
+        buttonSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent intent = new Intent(getActivity(), FirebaseAuthActivity.class);
+                startActivity(intent);
             }
         });
         return view;

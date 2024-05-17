@@ -14,7 +14,7 @@
             android:id="@+id/editTextNickname"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="70dp"
             android:ems="10"
             android:hint="Псевдоним"
             android:inputType="text"
@@ -26,7 +26,7 @@
             android:id="@+id/editTextAge"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="70dp"
             android:ems="10"
             android:hint="Возраст"
             android:inputType="text"
@@ -38,7 +38,7 @@
             android:id="@+id/editTextCountry"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="70dp"
             android:ems="10"
             android:hint="Страна"
             android:inputType="text"
@@ -50,10 +50,20 @@
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="70dp"
             android:text="Сохранить"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextCountry" />
+
+        <Button
+            android:id="@+id/buttonSignOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:text="Выйти"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSave" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
