@@ -36,5 +36,9 @@
             android:id="@+id/nav_microphone"
             android:icon="@android:drawable/ic_btn_speak_now"
             android:title="Microphone" />
+        <item
+            android:id="@+id/nav_cafes"
+            android:icon="@android:drawable/ic_dialog_map"
+            android:title="Cafes" />
     </group>
 </menu>
