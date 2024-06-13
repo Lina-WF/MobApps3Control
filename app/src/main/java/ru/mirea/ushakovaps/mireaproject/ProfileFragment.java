@@ -3,10 +3,12 @@ package ru.mirea.ushakovaps.mireaproject;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,13 @@ import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.net.Socket;
+
+import ru.mirea.ushakovaps.mireaproject.databinding.ActivityFirebaseAuthBinding;
+import ru.mirea.ushakovaps.mireaproject.databinding.FragmentProfileBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,10 +81,16 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    private final String host = "time.nist.gov"; // или time-a.nist.gov
+    private final int port = 13;
+
+    private FragmentProfileBinding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
         editTextNickname = view.findViewById(R.id.editTextNickname);
         editTextAge = view.findViewById(R.id.editTextAge);
         editTextCountry = view.findViewById(R.id.editTextCountry);

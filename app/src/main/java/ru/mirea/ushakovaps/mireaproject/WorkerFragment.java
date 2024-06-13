@@ -57,23 +57,20 @@ public class WorkerFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-            WorkManager workManager = WorkManager.getInstance(requireContext());
-            Constraints constraints	=	new	Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.UNMETERED)
-                    .setRequiresCharging(true)
-                    .build();
-            WorkRequest uploadWorkRequest	=
-                    new	OneTimeWorkRequest.Builder(MyWorker.class)
-                            .setConstraints(constraints)
-                            .build();
-            workManager.enqueue(uploadWorkRequest);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        WorkManager workManager = WorkManager.getInstance(requireContext());
+        Constraints constraints = new Constraints.Builder()
+                .build();
+        WorkRequest uploadWorkRequest =
+                new OneTimeWorkRequest.Builder(MyWorker.class)
+                        .setConstraints(constraints)
+                        .build();
+        workManager.enqueue(uploadWorkRequest);
         return inflater.inflate(R.layout.fragment_worker, container, false);
     }
 }

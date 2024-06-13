@@ -80,14 +80,14 @@ public class MicrophoneFragment extends Fragment {
 
         int audioRecordPermissionStatus = ContextCompat.checkSelfPermission(context,
                 android.Manifest.permission.RECORD_AUDIO);
-        int storagePermissionStatus = ContextCompat.checkSelfPermission(context, android.Manifest.permission.
-                WRITE_EXTERNAL_STORAGE);
-        if (audioRecordPermissionStatus == PackageManager.PERMISSION_GRANTED && storagePermissionStatus
-                == PackageManager.PERMISSION_GRANTED) {
+        if (audioRecordPermissionStatus == PackageManager.PERMISSION_GRANTED) {
             isWork = true;
+
+            Log.d("a", "iswork true");
         } else {
+            Log.d("a", "its trying");
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO,
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION);
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION);
         }
     }
     @Override

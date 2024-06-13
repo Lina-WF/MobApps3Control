@@ -85,9 +85,8 @@ public class CameraFragment extends Fragment {
         binding = FragmentCameraBinding.inflate(getLayoutInflater());
 
         int cameraPermissionStatus = ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA);
-        int storagePermissionStatus = ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        if (cameraPermissionStatus == PackageManager.PERMISSION_GRANTED && storagePermissionStatus == PackageManager.PERMISSION_GRANTED) {
+        if (cameraPermissionStatus == PackageManager.PERMISSION_GRANTED) {
             isWork = true;
             Log.d("a", "isWork true");
         } else {

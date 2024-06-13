@@ -5,15 +5,26 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import ru.mirea.ushakovaps.mireaproject.databinding.FragmentSensorBinding;
 
@@ -59,8 +70,11 @@ public class SensorFragment extends Fragment implements SensorEventListener {
     private FragmentSensorBinding binding;
     private TextView pressure;
     private TextView height;
+    private TextView weather;
+    private WebView webView;
     private SensorManager sensorManager;
     private Sensor BarometerSensor;
+
 
     @Override
     public  void onAttach(Context context)
@@ -87,9 +101,17 @@ public class SensorFragment extends Fragment implements SensorEventListener {
         View view = inflater.inflate(R.layout.fragment_sensor, container, false);
         pressure = view.findViewById(R.id.textViewPressure);
         height = view.findViewById(R.id.textViewHeight);
+        weather = view.findViewById(R.id.textViewWeather);
+        webView = view.findViewById(R.id.webView);
         return view;
     }
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        new DownloadPageTask().execute("https://ipinfo.io/json");
+    }
     @Override
     public void onPause() {
         super.onPause();
@@ -113,5 +135,79 @@ public class SensorFragment extends Fragment implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    private class DownloadPageTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            weather.setText("Загрузка погоды...");
+            Log.d(MainActivity.class.getSimpleName(), "Загрузка погоды...");
+            super.onPreExecute();
+        }
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                return downloadIpInfo(urls[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "error";
+            }
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d(MainActivity.class.getSimpleName(), result);
+            try {
+                JSONObject responseJson = new JSONObject(result);
+                Log.d(MainActivity.class.getSimpleName(), "Response: " + responseJson);
+                String loc = responseJson.getString("loc");
+                String latitude = loc.split(",")[0];
+                String longitude = loc.split(",")[1];
+                String url = "https://api.open-meteo.com/v1/forecast?latitude=" + latitude + "&longitude=" + longitude + "&current_weather=true";
+                Log.d(MainActivity.class.getSimpleName(), url);
+                webView.getSettings().setJavaScriptEnabled(true);
+                webView.loadUrl(url);
+                weather.setText("Погода загружена:");
+                Log.d(MainActivity.class.getSimpleName(), "Погода загружена");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            super.onPostExecute(result);
+        }
+
+        private String downloadIpInfo(String address) throws IOException {
+            InputStream inputStream = null;
+            String data = "";
+            try {
+                URL url = new URL(address);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setReadTimeout(100000);
+                connection.setConnectTimeout(100000);
+                connection.setRequestMethod("GET");
+                connection.setInstanceFollowRedirects(true);
+                connection.setUseCaches(false);
+                connection.setDoInput(true);
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) { // 200 OK
+                    inputStream = connection.getInputStream();
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    int read = 0;
+                    while ((read = inputStream.read()) != -1) {
+                        bos.write(read); }
+                    bos.close();
+                    data = bos.toString();
+                } else {
+                    data = connection.getResponseMessage()+". Error Code: " + responseCode;
+                }
+                connection.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            }
+            return data;
+        }
     }
 }
